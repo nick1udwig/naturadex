@@ -79,11 +79,7 @@ DATABASE_URL=postgres://naturadex_user:naturadex_pass@127.0.0.1:5432/naturadex
 Docker alternative:
 
 ```bash
-docker run --name naturadex-postgres \\
-  -e POSTGRES_PASSWORD=naturadex_pass \\
-  -e POSTGRES_USER=naturadex_user \\
-  -e POSTGRES_DB=naturadex \\
-  -p 5432:5432 -d postgres:16
+docker run --name naturadex-postgres -e POSTGRES_PASSWORD=naturadex_pass -e POSTGRES_USER=naturadex_user -e POSTGRES_DB=naturadex -p 5432:5432 -d postgres:16
 ```
 
 Run the server (migrations run automatically):
