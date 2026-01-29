@@ -55,6 +55,37 @@ Create the database (example):
 createdb naturadex
 ```
 
+If you see `connection to server ... failed: No such file or directory`, Postgres isn’t running. Start it (Pop!_OS/Ubuntu):
+
+```bash
+sudo systemctl start postgresql
+sudo systemctl enable postgresql
+sudo systemctl status postgresql
+```
+
+Then create a user + database if needed:
+
+```bash
+sudo -u postgres psql -c "CREATE USER naturadex_user WITH PASSWORD 'naturadex_pass';"
+sudo -u postgres psql -c "CREATE DATABASE naturadex OWNER naturadex_user;"
+```
+
+Update `DATABASE_URL`:
+
+```
+DATABASE_URL=postgres://naturadex_user:naturadex_pass@127.0.0.1:5432/naturadex
+```
+
+Docker alternative:
+
+```bash
+docker run --name naturadex-postgres \\
+  -e POSTGRES_PASSWORD=naturadex_pass \\
+  -e POSTGRES_USER=naturadex_user \\
+  -e POSTGRES_DB=naturadex \\
+  -p 5432:5432 -d postgres:16
+```
+
 Run the server (migrations run automatically):
 
 ```bash
