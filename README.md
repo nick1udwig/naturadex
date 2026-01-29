@@ -49,7 +49,7 @@ ANTHROPIC_MODEL=claude-opus-4-5
 STORAGE_DIR=storage
 ```
 
-Create the database (example):
+Create the database (local Postgres):
 
 ```bash
 createdb naturadex
@@ -80,6 +80,18 @@ Docker alternative:
 
 ```bash
 docker run --name naturadex-postgres -e POSTGRES_PASSWORD=naturadex_pass -e POSTGRES_USER=naturadex_user -e POSTGRES_DB=naturadex -p 5432:5432 -d postgres:16
+```
+
+If you run Postgres via Docker, you do **not** need to run `createdb` on the host. The database is created automatically when you pass `POSTGRES_DB`. Use this in `.env`:
+
+```
+DATABASE_URL=postgres://naturadex_user:naturadex_pass@127.0.0.1:5432/naturadex
+```
+
+If you still want to create the DB manually against Docker, use TCP:
+
+```bash
+createdb -h 127.0.0.1 -U naturadex_user naturadex
 ```
 
 Run the server (migrations run automatically):
